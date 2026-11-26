@@ -632,6 +632,11 @@
       "preview": "assets/preview-cream-box-tee.webp",
       "layers": [
         {
+          "id": "neck-opening",
+          "path": "assets/neck-daily-crew.png",
+          "z": 42
+        },
+        {
           "id": "top",
           "path": "assets/cream-box-tee.png",
           "z": 43
@@ -647,6 +652,11 @@
       "unlock": null,
       "preview": "assets/preview-lilac-sweatshirt.webp",
       "layers": [
+        {
+          "id": "neck-opening",
+          "path": "assets/neck-daily-crew.png",
+          "z": 42
+        },
         {
           "id": "top",
           "path": "assets/lilac-sweatshirt.png",
