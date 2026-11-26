@@ -24,7 +24,7 @@ const openWritingQuestion = loadQuestion;
 loadQuestion = function () {
   openWritingQuestion();
   byId('use-keyboard').hidden = false;
-  byId('ink-help').textContent = '쓴 답과 같으면 채점하고, 다르면 획을 고쳐 다시 인식해 줘.';
+  byId('ink-help').textContent = '펜으로 쓰거나 키보드로 답해 줘.';
 };
 const gradeWritingQuestion = grade;
 grade = function (skipped) {

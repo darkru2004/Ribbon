@@ -39,7 +39,7 @@ function validateRibbonBackup(backup) {
   const validFavorite = task => object(task) && text(task.id) && text(task.title) && reward(task.reward);
   if (data.economy !== null) {
     const { tasks, ledger, favorites } = data.economy;
-    const validTransaction = ([id, entry]) => /^(task:|purchase:|english:|english-first:).+/.test(id)
+    const validTransaction = ([id, entry]) => /^(task:|purchase:|english:|english-first:|gift:).+/.test(id)
       && object(entry) && timestamp(entry.at) && Number.isSafeInteger(entry.amount)
       && (id.startsWith("purchase:") ? entry.amount < 0 : entry.amount >= 0)
       && (entry.day === undefined || day(entry.day));

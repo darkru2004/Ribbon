@@ -34,6 +34,10 @@ def english_script():
     source = (ROOT / "english-dictation-9.html").read_text()
     script = re.search(r"<script>(.*?)</script>", source, re.S).group(1)
     script = script.replace("document.getElementById(id)", "root.getElementById(id)", 1)
+    pointer_handler = "ink.addEventListener('pointerdown', event => {"
+    if script.count(pointer_handler) != 1:
+        raise ValueError("Unable to find the English pen input handler.")
+    script = script.replace(pointer_handler, pointer_handler + "\n  if (event.pointerType !== 'pen') return;")
     script = re.sub(r"(\w+)\.replaceChildren\(\);", r"\1.textContent = '';", script)
     save_body = "  persistBook({...book, history: [record, ...book.history]});"
     if script.count(save_body) != 1:

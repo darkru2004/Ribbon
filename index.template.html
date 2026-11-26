@@ -149,6 +149,14 @@
         <div class="task-list" id="deleted-list"></div>
       </details>
       <p class="economy-message" id="parent-message" role="status"></p>
+      <details class="parent-tools">
+        <summary>코인 선물</summary>
+        <form class="task-form" id="coin-gift-form">
+          <label>선물할 코인 <input id="coin-gift-amount" type="number" inputmode="numeric" min="1" max="999" required></label>
+          <button class="save" type="submit">선물하기</button>
+        </form>
+        <p class="economy-message" id="coin-gift-message" role="status"></p>
+      </details>
       <details class="parent-tools" id="parent-stats">
         <summary>주간 학습 기록</summary>
         <div class="parent-stats-content">
@@ -175,6 +183,18 @@
     </section>
   </div>
 </main>
+<dialog id="parent-lock" aria-labelledby="parent-lock-title">
+  <form class="task-form" id="parent-lock-form">
+    <h2 id="parent-lock-title">부모 관리 잠금</h2>
+    <label>PIN <input id="parent-pin" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" required></label>
+    <label id="parent-pin-confirm-field">PIN 확인 <input id="parent-pin-confirm" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4"></label>
+    <p id="parent-lock-message" role="status"></p>
+    <div class="task-form-actions">
+      <button class="save" id="parent-unlock" type="submit">확인</button>
+      <button class="reset" id="parent-lock-cancel" type="button">취소</button>
+    </div>
+  </form>
+</dialog>
 <template id="english-template">/* INLINE_ENGLISH_TEMPLATE */</template>
 <script>/* INLINE_ENGLISH_APP */</script>
 <script type="application/json" id="catalog">/* INLINE_CATALOG */</script>

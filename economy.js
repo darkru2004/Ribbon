@@ -2,6 +2,7 @@ function createRibbonEconomy(items, byId, artUrl, inventoryChanged, celebrate, v
   "use strict";
 
   const key = ribbonStorageKeys.economy;
+  const pinKey = "ribbon-atelier.parent-pin.v1";
   const saleItems = items.filter(item => Number.isSafeInteger(item.price) && item.price > 0);
   const empty = () => ({ tasks: [], ledger: {}, favorites: [] });
   let snapshot = empty();
@@ -480,9 +481,101 @@ function createRibbonEconomy(items, byId, artUrl, inventoryChanged, celebrate, v
     return result.message;
   }
 
+  async function pinDigest(pin, salt) {
+    const bytes = new TextEncoder().encode(salt + ":" + pin);
+    const digest = await crypto.subtle.digest("SHA-256", bytes);
+    return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+  }
+
+  function openParentLock() {
+    const dialog = byId("parent-lock");
+    if (dialog.open) return;
+    byId("parent-lock-form").reset();
+    let setup = false;
+    let message = "";
+    try {
+      setup = localStorage.getItem(pinKey) === null;
+    } catch {
+      message = "이 브라우저에서 잠금 설정을 읽을 수 없어.";
+    }
+    byId("parent-lock-title").textContent = setup ? "부모 관리 PIN 설정" : "부모 관리 PIN 입력";
+    byId("parent-pin-confirm-field").hidden = !setup;
+    byId("parent-pin-confirm").required = setup;
+    byId("parent-lock-message").textContent = message || "숫자 4자리를 입력해 줘.";
+    dialog.showModal();
+  }
+
+  function configureParentTools() {
+    const dialog = byId("parent-lock");
+    const form = byId("parent-lock-form");
+    const unlock = byId("parent-unlock");
+    byId("parent-lock-cancel").onclick = () => dialog.close();
+    dialog.addEventListener("close", () => form.reset());
+    form.onsubmit = async event => {
+      event.preventDefault();
+      if (unlock.disabled) return;
+      const pin = byId("parent-pin").value;
+      const message = byId("parent-lock-message");
+      unlock.disabled = true;
+      try {
+        const stored = localStorage.getItem(pinKey);
+        if (stored === null) {
+          if (pin !== byId("parent-pin-confirm").value) {
+            message.textContent = "PIN 확인이 일치하지 않아.";
+            return;
+          }
+          const salt = crypto.randomUUID();
+          const hash = await pinDigest(pin, salt);
+          if (!dialog.open) return;
+          if (localStorage.getItem(pinKey) !== null) {
+            dialog.close();
+            return;
+          }
+          localStorage.setItem(pinKey, JSON.stringify({ salt, hash }));
+        } else {
+          const { salt, hash } = JSON.parse(stored);
+          if (await pinDigest(pin, salt) !== hash) {
+            message.textContent = "PIN이 맞지 않아.";
+            return;
+          }
+        }
+        if (dialog.open) {
+          dialog.close();
+          switchView("parent");
+        }
+      } catch {
+        message.textContent = "이 브라우저에서 부모 관리 잠금을 사용할 수 없어.";
+      } finally {
+        unlock.disabled = false;
+      }
+    };
+
+    byId("coin-gift-form").onsubmit = async event => {
+      event.preventDefault();
+      const button = event.submitter;
+      const field = byId("coin-gift-amount");
+      const amount = Number(field.value);
+      if (view !== "parent" || button.disabled || !Number.isSafeInteger(amount) || amount < 1 || amount > 999) return;
+      button.disabled = true;
+      const saved = await act("coin-gift-message", latest => {
+        if (!Number.isSafeInteger(balance(latest) + amount)) {
+          return { changed: false, message: "선물 후 잔액이 너무 커." };
+        }
+        addTransaction(latest, "gift:" + makeId(), amount);
+        return { changed: true, rewarded: true, message: amount + " 코인을 선물했어!" };
+      });
+      if (saved) field.value = "";
+      button.disabled = false;
+    };
+  }
+
   function start() {
     for (const button of document.querySelectorAll("[data-view-button]")) {
-      button.onclick = () => switchView(button.dataset.viewButton);
+      button.onclick = () => {
+        const next = button.dataset.viewButton;
+        if (next === "parent" && view !== "parent") openParentLock();
+        else switchView(next);
+      };
     }
     byId("week-prev").onclick = () => selectDay(dateKey(addDays(dateFromKey(selectedDay), -7)));
     byId("week-next").onclick = () => selectDay(dateKey(addDays(dateFromKey(selectedDay), 7)));
@@ -531,6 +624,7 @@ function createRibbonEconomy(items, byId, artUrl, inventoryChanged, celebrate, v
     });
     switchView("wardrobe");
     configureRibbonBackup(byId, switchView);
+    configureParentTools();
   }
 
   try { snapshot = read(); } catch {}
