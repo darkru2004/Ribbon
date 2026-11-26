@@ -621,6 +621,76 @@
           "z": 43
         }
       ]
+    },
+    {
+      "id": "cream-box-tee",
+      "name": "크림 박스티",
+      "category": "top",
+      "slot": "top",
+      "price": 5,
+      "unlock": null,
+      "preview": "assets/preview-cream-box-tee.webp",
+      "layers": [
+        {
+          "id": "top",
+          "path": "assets/cream-box-tee.png",
+          "z": 43
+        }
+      ]
+    },
+    {
+      "id": "lilac-sweatshirt",
+      "name": "라일락 맨투맨",
+      "category": "top",
+      "slot": "top",
+      "price": 8,
+      "unlock": null,
+      "preview": "assets/preview-lilac-sweatshirt.webp",
+      "layers": [
+        {
+          "id": "top",
+          "path": "assets/lilac-sweatshirt.png",
+          "z": 43
+        }
+      ]
+    },
+    {
+      "id": "light-straight-jeans",
+      "name": "연청 일자 데님",
+      "category": "bottom",
+      "slot": "bottom",
+      "price": 8,
+      "unlock": null,
+      "preview": "assets/preview-light-straight-jeans.webp",
+      "layers": [
+        {
+          "id": "bottom",
+          "path": "assets/light-straight-jeans.png",
+          "z": 40
+        }
+      ],
+      "masks": {
+        "body": "assets/mask-daily-trousers.png"
+      }
+    },
+    {
+      "id": "rose-pleated-skirt",
+      "name": "더스티핑크 플리츠",
+      "category": "bottom",
+      "slot": "bottom",
+      "price": 5,
+      "unlock": null,
+      "preview": "assets/preview-rose-pleated-skirt.webp",
+      "layers": [
+        {
+          "id": "bottom",
+          "path": "assets/rose-pleated-skirt.png",
+          "z": 40
+        }
+      ],
+      "masks": {
+        "body": "assets/mask-arms-short.png"
+      }
     }
   ],
   "audio": {
