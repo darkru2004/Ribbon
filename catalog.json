@@ -758,6 +758,27 @@
       "masks": {
         "body": "assets/mask-arms-short.png"
       }
+    },
+    {
+      "id": "red-football-jersey",
+      "name": "레드 축구 유니폼",
+      "category": "top",
+      "slot": "top",
+      "price": 8,
+      "unlock": null,
+      "preview": "assets/preview-red-football-jersey.webp",
+      "layers": [
+        {
+          "id": "neck-opening",
+          "path": "assets/neck-daily-crew.png",
+          "z": 42
+        },
+        {
+          "id": "top",
+          "path": "assets/red-football-jersey.png",
+          "z": 43
+        }
+      ]
     }
   ],
   "audio": {
