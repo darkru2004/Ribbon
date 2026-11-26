@@ -701,6 +701,63 @@
       "masks": {
         "body": "assets/mask-arms-short.png"
       }
+    },
+    {
+      "id": "sage-joggers",
+      "name": "세이지 조거 팬츠",
+      "category": "bottom",
+      "slot": "bottom",
+      "price": 8,
+      "unlock": null,
+      "preview": "assets/preview-sage-joggers.webp",
+      "layers": [
+        {
+          "id": "bottom",
+          "path": "assets/sage-joggers.png",
+          "z": 40
+        }
+      ],
+      "masks": {
+        "body": "assets/mask-daily-trousers.png"
+      }
+    },
+    {
+      "id": "navy-midi-skirt",
+      "name": "네이비 미디 A라인 스커트",
+      "category": "bottom",
+      "slot": "bottom",
+      "price": 7,
+      "unlock": null,
+      "preview": "assets/preview-navy-midi-skirt.webp",
+      "layers": [
+        {
+          "id": "bottom",
+          "path": "assets/navy-midi-skirt.png",
+          "z": 40
+        }
+      ],
+      "masks": {
+        "body": "assets/mask-arms-short.png"
+      }
+    },
+    {
+      "id": "ivory-tiered-skirt",
+      "name": "아이보리 롱 티어드 스커트",
+      "category": "bottom",
+      "slot": "bottom",
+      "price": 9,
+      "unlock": null,
+      "preview": "assets/preview-ivory-tiered-skirt.webp",
+      "layers": [
+        {
+          "id": "bottom",
+          "path": "assets/ivory-tiered-skirt.png",
+          "z": 40
+        }
+      ],
+      "masks": {
+        "body": "assets/mask-arms-short.png"
+      }
     }
   ],
   "audio": {
