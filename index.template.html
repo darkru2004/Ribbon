@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>리본 아틀리에 · 탈의실</title>
+<style>/* INLINE_STYLE */</style>
+</head>
+<body>
+<main class="shell">
+  <header class="header">
+    <div class="brand"><span class="emblem" aria-hidden="true">✿</span><div><p>RIBBON ATELIER</p><h1>리본 아틀리에</h1></div></div>
+    <div class="header-controls">
+      <button type="button" class="motion" id="motion" aria-pressed="true"><span aria-hidden="true">✧</span> 움직임 <b>켜짐</b></button>
+      <details class="sound-settings">
+        <summary aria-label="소리 설정"><span aria-hidden="true">♪</span> <span class="sound-label" aria-hidden="true">소리</span></summary>
+        <div class="sound-panel">
+          <div class="sound-row">
+            <label><input id="bgm-enabled" type="checkbox"> 배경음</label>
+            <input id="bgm-volume" aria-label="배경음 음량" type="range" min="0" max="100" step="1">
+            <output id="bgm-level" for="bgm-volume"></output>
+          </div>
+          <div class="sound-row">
+            <label><input id="sfx-enabled" type="checkbox"> 효과음</label>
+            <input id="sfx-volume" aria-label="효과음 음량" type="range" min="0" max="100" step="1">
+            <output id="sfx-level" for="sfx-volume"></output>
+          </div>
+        </div>
+      </details>
+    </div>
+  </header>
+  <nav class="game-nav" aria-label="게임 화면">
+    <div class="game-tabs" role="group" aria-label="화면 선택">
+      <button type="button" data-view-button="wardrobe" aria-pressed="true">옷장</button>
+      <button type="button" data-view-button="tasks" aria-pressed="false">오늘 할 일</button>
+      <button type="button" data-view-button="english" aria-pressed="false">영어</button>
+      <button type="button" data-view-button="shop" aria-pressed="false">상점</button>
+      <button type="button" data-view-button="parent" aria-pressed="false">부모 관리</button>
+    </div>
+    <output class="coin-meter" id="coins" aria-label="코인 잔액">0 코인</output>
+  </nav>
+  <div class="layout">
+    <section class="stage" aria-label="캐릭터 미리보기">
+      <div class="room" id="room-background" aria-hidden="true"></div>
+      <button class="stage-label" id="room-shortcut" type="button"><span aria-hidden="true">✦</span> 나의 방</button>
+      <div class="doll-frame" id="doll-frame">
+        <div class="doll-area" id="doll-area">
+          <div class="doll" id="doll" aria-hidden="true"></div>
+          <button type="button" id="react" class="react" aria-label="캐릭터에게 인사하기"></button>
+          <div class="sparkle" id="sparkle" aria-hidden="true"><span>✧</span><span>✦</span><span>✧</span></div>
+        </div>
+        <button type="button" class="room-pet" id="room-pet" hidden>
+          <span class="pet-sprite" aria-hidden="true">
+            <img class="pet-body" id="pet-body" alt="" draggable="false">
+            <img class="pet-ears" id="pet-ears" alt="" draggable="false">
+          </span>
+          <span class="pet-heart" aria-hidden="true">♡</span>
+        </button>
+        <span class="visually-hidden" id="pet-message" role="status"></span>
+      </div>
+      <div class="stage-tag" id="look-name"></div>
+    </section>
+    <section class="wardrobe" data-pane="wardrobe" aria-labelledby="wardrobe-title">
+      <div class="wardrobe-head"><div><p>MY WARDROBE</p><h2 id="wardrobe-title">나의 옷장</h2></div><span class="wardrobe-mark" aria-hidden="true">✿</span></div>
+      <div class="wardrobe-modes" role="group" aria-label="옷장 보기">
+        <button type="button" data-wardrobe-view="items" aria-pressed="true">갈아입기</button>
+        <button type="button" data-wardrobe-view="room" aria-pressed="false">방 꾸미기</button>
+        <button type="button" data-wardrobe-view="looks" aria-pressed="false">내 코디</button>
+        <button type="button" data-wardrobe-view="catalog" aria-pressed="false">도감</button>
+      </div>
+      <div class="wardrobe-panel" data-wardrobe-panel="items">
+        <div class="tabs" id="categories" role="group" aria-label="옷장 종류"></div>
+        <div class="selection">
+          <div class="selection-head"><h3 id="selection-title"></h3><span id="selection-count"></span></div>
+          <div id="items" class="items" role="group" aria-labelledby="selection-title"></div>
+        </div>
+        <div class="actions">
+          <button type="button" class="reset" id="reset">초기 코디</button>
+          <button type="button" class="save" id="save"><span aria-hidden="true">♡</span> 코디 저장</button>
+        </div>
+      </div>
+      <div class="wardrobe-panel room-panel" data-wardrobe-panel="room" hidden>
+        <div class="selection-head"><h3 id="room-picks-heading">배경</h3></div>
+        <div class="items room-picks" id="room-items" role="group" aria-labelledby="room-picks-heading"></div>
+        <div class="selection-head"><h3 id="pet-picks-heading">펫</h3></div>
+        <div class="items room-picks" id="pet-items" role="group" aria-labelledby="pet-picks-heading"></div>
+        <div class="actions">
+          <button class="reset" id="room-shop" type="button">상점 보기</button>
+          <button class="save" id="room-save" type="button">이 방과 코디 저장</button>
+        </div>
+      </div>
+      <div class="wardrobe-panel" data-wardrobe-panel="looks" hidden>
+        <form class="look-form" id="look-form">
+          <label for="look-title">코디 이름</label>
+          <div><input id="look-title" maxlength="24" placeholder="예: 봄 소풍" required>
+          <button class="save" type="submit">지금 코디 저장</button></div>
+        </form>
+        <div class="task-list saved-looks" id="saved-looks"></div>
+      </div>
+      <div class="wardrobe-panel" data-wardrobe-panel="catalog" hidden>
+        <div class="album-head"><strong id="catalog-count"></strong><select id="catalog-filter" aria-label="도감 보기">
+          <option value="all">전체</option><option value="owned">보유</option><option value="locked">미보유</option>
+        </select></div>
+        <div class="items catalog-grid" id="catalog-items"></div>
+      </div>
+      <p id="status" role="status">캐릭터를 톡 누르면 표정이 바뀌어.</p>
+    </section>
+    <section class="wardrobe economy-pane" data-pane="tasks" aria-labelledby="tasks-title" hidden>
+      <div class="wardrobe-head"><div><h2 id="tasks-title">오늘 할 일</h2><p class="local-date" id="task-date"></p><p class="local-date" id="task-summary"></p></div></div>
+      <div class="task-list" id="tasks-list"></div>
+      <p class="economy-message" id="tasks-message" role="status"></p>
+    </section>
+    <section class="wardrobe english-pane" data-pane="english" aria-labelledby="english-heading" hidden>
+      <div class="wardrobe-head"><div><h2 id="english-heading">영어 받아쓰기</h2></div></div>
+      <div id="english-host"></div>
+    </section>
+    <section class="wardrobe economy-pane" data-pane="shop" aria-labelledby="shop-title" hidden>
+      <div class="wardrobe-head"><div><h2 id="shop-title">상점</h2></div></div>
+      <div id="shop-items" class="shop-items"></div>
+      <p class="economy-message" id="shop-message" role="status"></p>
+    </section>
+    <section class="wardrobe economy-pane" data-pane="parent" aria-labelledby="parent-title" hidden>
+      <div class="wardrobe-head"><div><h2 id="parent-title">부모 관리</h2><p class="local-date" id="parent-date"></p></div></div>
+      <div class="week-controls">
+        <button type="button" id="week-prev" aria-label="이전 주">‹</button>
+        <div id="week-label" aria-live="polite"></div>
+        <button type="button" id="week-next" aria-label="다음 주">›</button>
+        <button type="button" id="week-today">오늘</button>
+      </div>
+      <div class="week-days" id="week-days" role="group" aria-label="요일별 일정"></div>
+      <div class="favorite-block" id="favorite-block" hidden>
+        <h3>자주 쓰는 할 일</h3>
+        <div id="favorite-tasks" class="favorite-tasks"></div>
+      </div>
+      <form id="task-form" class="task-form">
+        <label id="edit-date-field" hidden>일정 날짜 <input id="task-day" name="day" type="date"></label>
+        <label>할 일 <input id="task-title" name="title" type="text" maxlength="60" required placeholder="예: 책 10분 읽기"></label>
+        <label class="reward-field">완료 보상 <input id="task-reward" name="reward" type="number" inputmode="numeric" min="1" max="999" required value="10"> 코인</label>
+        <div class="task-form-actions">
+          <button class="save" id="task-submit" type="submit">할 일 등록</button>
+          <button class="reset" id="favorite-save" type="button">자주 쓰기에 저장</button>
+          <button class="reset" id="task-cancel" type="button" hidden>수정 취소</button>
+        </div>
+      </form>
+      <div class="task-list" id="parent-list"></div>
+      <details class="deleted-tasks" id="deleted-tasks" hidden>
+        <summary id="deleted-summary">삭제한 일정</summary>
+        <div class="task-list" id="deleted-list"></div>
+      </details>
+      <p class="economy-message" id="parent-message" role="status"></p>
+      <details class="parent-tools" id="parent-stats">
+        <summary>주간 학습 기록</summary>
+        <div class="parent-stats-content">
+          <strong id="stats-week"></strong>
+          <p id="stats-tasks"></p>
+          <p id="stats-english"></p>
+          <p id="stats-missed"></p>
+        </div>
+      </details>
+      <details class="parent-tools" id="parent-backup">
+        <summary>전체 백업 · 복원</summary>
+        <p class="backup-hint">일정, 코인, 아이템, 코디, 영어 기록을 JSON 하나에 저장해. 복원하면 이 기기에 저장된 데이터가 백업 시점으로 돌아가.</p>
+        <div class="task-form-actions">
+          <button class="reset" id="full-backup-save" type="button">백업 내보내기</button>
+          <button class="reset" id="full-backup-load" type="button">백업 불러오기</button>
+        </div>
+        <input type="file" id="full-backup-file" accept=".json,application/json" hidden>
+        <p class="economy-message" id="backup-message" role="status"></p>
+        <div class="reset-inputs">
+          <button class="reset" id="reset-input-data" type="button">입력 데이터 초기화</button>
+          <small>일정·자주 쓰는 할 일·영어 단어장과 시험 기록을 비워. 코인과 구매한 아이템은 유지돼.</small>
+        </div>
+      </details>
+    </section>
+  </div>
+</main>
+<template id="english-template">/* INLINE_ENGLISH_TEMPLATE */</template>
+<script>/* INLINE_ENGLISH_APP */</script>
+<script type="application/json" id="catalog">/* INLINE_CATALOG */</script>
+<script type="application/json" id="art">/* INLINE_ART */</script>
+<script>/* INLINE_BACKUP */</script>
+<script>/* INLINE_ECONOMY */</script>
+<script>/* INLINE_AUDIO */</script>
+<script>/* INLINE_APP */</script>
+</body>
+</html>

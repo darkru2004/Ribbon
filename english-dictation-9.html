@@ -1,0 +1,1122 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>나의 영어 단어장</title>
+<style>
+:root{color-scheme:light;--ink:#2f2449;--muted:#605473;--line:#e5d9f1;--accent:#6b3fa5;--paper:#fffdfa;--wash:#f2e9ff}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 6% 0,#ffe6ee 0,transparent 43%),radial-gradient(ellipse at 100% 5%,#e8ddff 0,transparent 49%),#faf6fc;color:var(--ink);font:1rem/1.55 system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+main{width:min(100% - 28px,740px);margin:clamp(18px,5vh,50px) auto 48px}
+h1,h2,h3,p{margin:0}
+h1{font-size:clamp(1.6rem,5vw,2.55rem);letter-spacing:-.065em;line-height:1.15}
+h2{font-size:clamp(1.23rem,4vw,1.55rem);letter-spacing:-.045em}h3{font-size:1.22rem;letter-spacing:-.035em;overflow-wrap:anywhere}
+.masthead{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding:4px 1px}
+.masthead p{font-size:.89rem;color:var(--muted);margin-top:5px}
+.brand-icon{display:grid;place-items:center;flex:0 0 56px;height:56px;background:#793fa8;border-radius:18px;color:#fff3c9;font-size:2.2rem;transform:rotate(-7deg);border:2px solid #fffdf9;box-shadow:0 4px 10px #74459738;line-height:1}
+.navigation{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;padding:5px;margin-bottom:20px;background:#ffffffb8;border:1px solid var(--line);border-radius:17px}
+.navigation button{padding:7px 1px;min-height:43px;background:transparent;color:var(--muted);white-space:nowrap;font-size:.94rem}
+.navigation button[aria-current]{background:#eadefa;color:#512c83}
+.card{background:var(--paper);padding:clamp(16px,4vw,30px);border:1px solid var(--line);border-radius:25px;box-shadow:0 10px 28px #7344a00c}
+label{font-weight:740}small,.hint{display:block;color:var(--muted);font-size:.9rem}
+textarea,input[type=text]{display:block;width:100%;min-width:0;background:#fffcff;border:1px solid #cabbda;border-radius:13px;padding:11px 13px;color:var(--ink);font:inherit}
+textarea{min-height:158px;resize:vertical;margin:8px 0 12px}
+input[type=text]{margin:6px 0 16px;min-height:48px}
+#answer{font-size:1.3rem;margin-bottom:6px}
+button{font:inherit;font-weight:740;color:#58328c;background:var(--wash);border:1px solid transparent;border-radius:13px;padding:9px 13px;min-height:46px;cursor:pointer}
+button.primary{background:var(--accent);color:white}button.subtle{background:#fffafd;border-color:var(--line);color:var(--ink)}
+:focus-visible{outline:3px solid #a162ca;outline-offset:3px}
+h2[tabindex]:focus{outline:none}
+button:disabled{opacity:.52;cursor:default}
+.shuffle-option{display:flex;gap:7px;align-items:center;margin-top:12px;color:var(--muted);font-size:.92rem}
+.row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.row>*{flex:1 0 auto}
+.settings,.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin:12px 0 16px}
+.top{margin-top:0}.top button{font-size:.91rem}
+.wide{width:100%}.space{margin-top:14px}
+.set-grid{display:grid;gap:12px}
+.set-card{background:#fffdfb;border:1px solid var(--line);border-top:4px solid var(--ribbon,#c6a2ed);border-radius:17px;padding:10px 14px}
+.set-card:nth-child(3n+2){--ribbon:#efa2b9}.set-card:nth-child(3n){--ribbon:#92c9b6}
+.set-card summary strong{font-size:1.08rem;margin-inline:5px 10px}
+.set-card summary span{color:var(--muted);font-size:.87rem}
+.empty{grid-column:1/-1;text-align:center;padding:24px 14px;color:var(--muted);background:#fffafecf;border:1px dashed #d5c2e8;border-radius:17px}
+.empty strong{display:block;color:var(--ink);margin-bottom:4px}
+.study-words,.review{padding:0;list-style:none;margin:12px 0}
+.study-words li{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line)}
+.study-words span{display:block;overflow-wrap:anywhere}.study-words strong{display:block;font-size:1.18rem;overflow-wrap:anywhere}.study-words button{flex:none;min-height:43px}
+.mix-options{margin-top:12px;display:grid;gap:8px}
+.mix-option{display:flex;align-items:center;gap:12px;padding:10px;border:1px solid var(--line);border-radius:13px;background:#fffafd;overflow-wrap:anywhere}
+input[type=checkbox]{width:20px;height:20px;flex:none;accent-color:var(--accent)}
+.history-list{display:grid;gap:9px;margin:12px 0}
+.history-list details{border:1px solid var(--line);border-radius:14px;padding:9px 12px;background:#fffafd}
+summary{cursor:pointer;padding:5px 0;overflow-wrap:anywhere}
+.history-list .hint{margin:2px 0}
+.backup{border-top:1px solid var(--line);padding-top:12px;margin-top:18px}
+progress{display:block;width:100%;height:9px;margin-bottom:16px;accent-color:var(--accent)}
+.listen{padding:12px;border-radius:16px;background:#f5ebff;margin-bottom:15px}
+.status{color:var(--muted);font-size:.9rem;margin-top:8px}.status:empty{display:none}
+.storage-status{color:#824824;background:#fff0df;border-radius:12px;padding:9px 12px;margin-bottom:12px}
+.feedback{border-radius:12px;padding:10px 13px;margin-top:10px;background:#e8f6eb;color:#175b30;overflow-wrap:anywhere}
+.feedback.wrong{background:#fff2e6;color:#8d3716}
+.review li{padding:7px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.ink-pad{display:block;width:100%;height:clamp(126px,24vw,174px);margin:6px 0 8px;border:1px solid #cabbda;border-radius:14px;touch-action:none;background:#fffefe;cursor:crosshair}
+.ink-tools{justify-content:flex-end;margin-top:7px}.ink-tools>*{flex:0 1 auto;padding:6px 10px;min-height:42px;font-size:.89rem}
+.transcript{margin-top:10px}.transcript p{color:var(--muted);font-size:.9rem}
+.quiz-label{margin-bottom:6px;overflow-wrap:anywhere}
+.result-note{margin-top:5px}
+[hidden]{display:none!important}
+@media(min-width:680px){.brand-icon{flex-basis:67px;height:67px}}
+
+.history-filter{display:flex;align-items:center;gap:9px;margin-top:10px;font-size:.9rem}
+.history-filter select{min-width:0;max-width:100%;border:1px solid var(--line);border-radius:11px;background:#fffafd;color:var(--ink);font:inherit;padding:8px 12px;min-height:42px}
+.entry-row{display:grid;grid-template-columns:2rem minmax(0,1fr) minmax(0,1.2fr);gap:7px;align-items:center}
+.entry-row input[type=text]{margin:0 0 6px;padding:9px;min-height:44px}
+.entry-row span:first-child{color:var(--muted);text-align:center}
+.entry-heading{font-weight:740;margin:8px 0 5px}
+.entry-picker{display:grid;gap:4px;margin-bottom:12px}
+#chapter-picker{width:100%;border:1px solid #cabbda;border-radius:13px;background:#fffcff;color:var(--ink);font:inherit;padding:9px 12px;min-height:45px}
+#paste-words{min-height:85px}
+.paste-section{margin-top:10px}
+@media(max-width:350px){.navigation button{font-size:.82rem}}
+</style>
+</head>
+<body>
+<main>
+<header class="masthead">
+  <div class="brand-icon" aria-hidden="true">✿</div>
+  <div><h1>나의 영어 단어장</h1><p>귀로 듣고, 손으로 쓰는 영어</p></div>
+</header>
+<nav id="navigation" class="navigation" aria-label="메뉴">
+  <button type="button" id="tab-setup">입력</button>
+  <button type="button" id="tab-home" aria-current="page">단어장</button>
+  <button type="button" id="tab-mix">시험</button>
+  <button type="button" id="tab-history">기록</button>
+</nav>
+<p id="storage-status" class="storage-status" role="status" hidden></p>
+<section id="home">
+  <div class="top"><h2 id="home-heading" tabindex="-1">내 단어장</h2><p id="notebook-count" class="hint"></p></div>
+  <div id="set-list" class="set-grid"></div>
+  <p id="study-audio-status" class="status" role="status"></p>
+</section>
+<section class="card" id="setup" hidden>
+  <h2 id="setup-heading" tabindex="-1">장별 단어 입력</h2>
+  <form id="setup-form">
+    <label class="entry-picker" for="chapter-picker">입력할 장 <select id="chapter-picker"></select></label>
+    <label for="set-title">장 이름</label>
+    <input id="set-title" type="text" autocomplete="off" maxlength="70" placeholder="예: 21장">
+    <div class="entry-row entry-heading" aria-hidden="true"><span></span><span>영어 단어</span><span>뜻</span></div>
+    <div id="word-rows"></div>
+    <div class="settings"><span class="hint" id="count" aria-live="polite"></span><button type="button" id="add-row" class="subtle">＋ 한 줄 추가</button></div>
+    <details class="paste-section">
+      <summary>여러 단어 붙여넣기</summary>
+      <label for="paste-words" class="hint">한 줄에 <strong>apple = 사과</strong>처럼 입력해 줘.</label>
+      <textarea id="paste-words" autocomplete="off" spellcheck="false" placeholder="apple = 사과&#10;banana = 바나나"></textarea>
+      <button type="button" id="apply-paste" class="subtle">입력 칸에 추가</button>
+    </details>
+    <div class="row space">
+      <button class="primary">저장</button>
+      <button type="button" id="new-chapter" class="subtle">새 장 입력</button>
+    </div>
+    <p id="setup-status" class="status" role="status"></p>
+  </form>
+</section>
+<section class="card" id="mix" hidden>
+  <h2 id="mix-heading" tabindex="-1">받아쓰기 시험</h2>
+  <p class="hint">시험 볼 장을 하나 또는 여러 개 골라 줘. 같은 단어는 한 번만 나와.</p>
+  <form id="mix-form">
+    <div id="mix-options" class="mix-options"></div>
+    <div class="settings"><span id="mix-count" class="hint" aria-live="polite"></span><button type="button" id="toggle-all" class="subtle">모두 선택</button></div>
+    <label class="shuffle-option" id="shuffle-setting"><input type="checkbox" id="single-shuffle" checked> 문제 순서 섞기</label>
+    <button class="primary wide space" id="start-mix">시험 시작</button>
+  </form>
+</section>
+<section class="card" id="history" hidden>
+  <h2 id="history-heading" tabindex="-1">시험 기록</h2>
+  <label class="history-filter" for="history-filter">시험 범위 <select id="history-filter"></select></label>
+  <div id="history-list" class="history-list"></div>
+  <div class="backup">
+    <p class="hint">기록과 단어장은 이 브라우저에 저장돼. 파일을 옮길 때는 백업을 가져가면 돼.</p>
+    <div class="row space">
+      <button type="button" id="export" class="subtle">백업 저장</button>
+      <button type="button" id="import" class="subtle">백업 가져오기</button>
+    </div>
+    <input type="file" id="backup-file" accept=".json,application/json" hidden>
+    <p id="backup-status" class="status" role="status"></p>
+  </div>
+</section>
+<section class="card" id="quiz" hidden>
+  <p id="quiz-label" class="hint quiz-label"></p>
+  <div class="top"><h2 id="question" tabindex="-1"></h2><button class="subtle" id="edit">나가기</button></div>
+  <progress id="progress" aria-label="시험 진행"></progress>
+  <div class="listen">
+    <div class="row"><button id="listen" class="primary">🔊 발음 듣기</button><button id="slow">느리게 듣기</button></div>
+    <p id="audio-status" class="status" role="status"></p>
+  </div>
+  <form id="answer-form">
+    <p id="ink-label"><strong>빈칸에 단어 전체를 써 봐</strong></p>
+    <canvas id="ink" class="ink-pad" aria-labelledby="ink-label" aria-describedby="line-help"></canvas>
+    <small id="line-help">소문자 a는 점선과 파란 줄 사이에, b는 윗줄까지, g는 아랫줄까지 써 봐.</small>
+    <div class="row ink-tools" id="ink-tools">
+      <button id="undo-ink" type="button" class="subtle" disabled>한 획 취소</button>
+      <button id="clear-ink" type="button" class="subtle" disabled>다 지우기</button>
+    </div>
+    <p id="ink-status" class="status" role="status"></p>
+    <div id="transcript" class="transcript" hidden>
+      <label for="answer">이렇게 읽었어</label>
+      <input id="answer" type="text" lang="en" aria-describedby="ink-help" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" readonly>
+      <p id="ink-help">쓴 답과 같으면 채점하고, 다르면 획을 고쳐 다시 인식해 줘.</p>
+      <button id="edit-transcript" type="button" class="subtle space">인식한 철자만 수정</button>
+    </div>
+    <div id="feedback" class="feedback" role="status" hidden></div>
+    <div class="row space">
+      <button type="button" class="subtle" id="skip">모르겠어요</button>
+      <button type="button" class="primary" id="recognize" disabled>손글씨 인식</button>
+      <button class="primary" id="check" hidden>채점하기</button>
+      <button class="primary" id="next" type="button" hidden>다음 문제</button>
+    </div>
+  </form>
+</section>
+<section class="card" id="results" hidden>
+  <h2 id="score" tabindex="-1"></h2>
+  <p id="result-note" class="hint result-note"></p>
+  <ul id="review" class="review"></ul>
+  <div class="row space">
+    <button class="primary" id="retry-missed">틀린 단어 다시</button>
+    <button id="retry-all">전체 다시</button>
+    <button class="subtle" id="edit-results">시험 선택</button>
+  </div>
+</section>
+</main>
+<script>
+'use strict';
+const byId = id => document.getElementById(id);
+const wordRows = byId('word-rows');
+const question = byId('question');
+const answer = byId('answer');
+const feedback = byId('feedback');
+const audioStatus = byId('audio-status');
+const panels = ['home', 'setup', 'mix', 'history', 'quiz', 'results'];
+let round = [];
+let attempts = [];
+let position = 0;
+let speechId = 0;
+const ink = byId('ink');
+const inkContext = ink.getContext('2d');
+const inkStatus = byId('ink-status');
+const recognizeButton = byId('recognize');
+const transcript = byId('transcript');
+let strokes = [];
+let activePointer = null;
+let inkRevision = 0;
+let pendingRecognition = null;
+let graded = false;
+let enginePromise;
+
+function drawStroke(context, points, width, height) {
+  context.lineWidth = 4;
+  context.lineCap = 'round';
+  context.lineJoin = 'round';
+  context.strokeStyle = context.fillStyle = '#151515';
+  context.beginPath();
+  if (points.length === 1) {
+    context.arc(points[0].x * width, points[0].y * height, 2, 0, 2 * Math.PI);
+    context.fill();
+    return;
+  }
+  context.moveTo(points[0].x * width, points[0].y * height);
+  for (const point of points.slice(1)) context.lineTo(point.x * width, point.y * height);
+  context.stroke();
+}
+
+function redrawInk() {
+  const {width, height} = ink.getBoundingClientRect();
+  if (!width || !height) return;
+  const scale = Math.min(window.devicePixelRatio || 1, 3);
+  if (ink.width !== Math.round(width * scale) || ink.height !== Math.round(height * scale)) {
+    ink.width = Math.round(width * scale);
+    ink.height = Math.round(height * scale);
+  }
+  inkContext.setTransform(ink.width / width, 0, 0, ink.height / height, 0, 0);
+  inkContext.clearRect(0, 0, width, height);
+  const notebookLines = [
+    {position: .155, color: '#b0c0d2'},
+    {position: .385, color: '#a0b2c7', dashed: true},
+    {position: .615, color: '#447cb7', baseline: true},
+    {position: .845, color: '#b0c0d2'}
+  ];
+  for (const line of notebookLines) {
+    const y = height * line.position;
+    inkContext.beginPath();
+    inkContext.setLineDash(line.dashed ? [6, 5] : []);
+    inkContext.lineWidth = line.baseline ? 1.6 : 1;
+    inkContext.strokeStyle = line.color;
+    inkContext.moveTo(10, y);
+    inkContext.lineTo(width - 10, y);
+    inkContext.stroke();
+  }
+  inkContext.setLineDash([]);
+  for (const points of strokes) drawStroke(inkContext, points, width, height);
+}
+
+function refreshInkControls() {
+  recognizeButton.hidden = graded || !transcript.hidden;
+  recognizeButton.disabled = !strokes.length || activePointer !== null || pendingRecognition !== null;
+  byId('undo-ink').disabled = byId('clear-ink').disabled = !strokes.length || activePointer !== null;
+}
+
+function invalidateTranscript() {
+  inkRevision += 1;
+  pendingRecognition = null;
+  answer.value = '';
+  answer.readOnly = true;
+  transcript.hidden = true;
+  byId('edit-transcript').hidden = false;
+  byId('check').hidden = true;
+  feedback.hidden = true;
+  inkStatus.textContent = '';
+  recognizeButton.textContent = '손글씨 인식';
+}
+
+function pointFor(event) {
+  const rect = ink.getBoundingClientRect();
+  const clamp = value => Math.max(0, Math.min(1, value));
+  return {x: clamp((event.clientX - rect.left) / rect.width), y: clamp((event.clientY - rect.top) / rect.height)};
+}
+
+function resetInk() {
+  const previousPointer = activePointer;
+  activePointer = null;
+  if (previousPointer !== null && ink.hasPointerCapture(previousPointer)) ink.releasePointerCapture(previousPointer);
+  strokes = [];
+  invalidateTranscript();
+  redrawInk();
+  refreshInkControls();
+}
+
+ink.addEventListener('pointerdown', event => {
+  if (graded || activePointer !== null || event.button !== 0) return;
+  event.preventDefault();
+  invalidateTranscript();
+  activePointer = event.pointerId;
+  ink.setPointerCapture(activePointer);
+  strokes.push([pointFor(event)]);
+  redrawInk();
+  refreshInkControls();
+});
+ink.addEventListener('pointermove', event => {
+  if (event.pointerId !== activePointer) return;
+  const points = strokes[strokes.length - 1];
+  const samples = event.getCoalescedEvents?.() || [];
+  for (const sample of samples.length ? samples : [event]) points.push(pointFor(sample));
+  redrawInk();
+});
+function finishStroke(event) {
+  if (event.pointerId !== activePointer) return;
+  if (event.type === 'pointerup') {
+    const points = strokes[strokes.length - 1];
+    const end = pointFor(event);
+    const last = points[points.length - 1];
+    if (end.x !== last.x || end.y !== last.y) points.push(end);
+  }
+  activePointer = null;
+  redrawInk();
+  refreshInkControls();
+}
+for (const name of ['pointerup', 'pointercancel', 'lostpointercapture']) ink.addEventListener(name, finishStroke);
+if ('ResizeObserver' in window) new ResizeObserver(redrawInk).observe(ink);
+else window.addEventListener('resize', redrawInk);
+byId('undo-ink').addEventListener('click', () => {
+  strokes.pop();
+  invalidateTranscript();
+  redrawInk();
+  refreshInkControls();
+});
+byId('clear-ink').addEventListener('click', resetInk);
+byId('edit-transcript').addEventListener('click', () => {
+  answer.readOnly = false;
+  answer.focus();
+  answer.select();
+});
+
+function measureInk(points, width, height) {
+  let left = width, top = height, right = 0, bottom = 0;
+  for (const point of points) {
+    const x = point.x * width;
+    const y = point.y * height;
+    left = Math.min(left, x);
+    right = Math.max(right, x);
+    top = Math.min(top, y);
+    bottom = Math.max(bottom, y);
+  }
+  return {points, left, right, top, bottom};
+}
+
+function groupInk(width, height) {
+  const ordered = strokes.map(points => measureInk(points, width, height))
+    .sort((a, b) => a.left - b.left);
+  const groups = [];
+  for (const stroke of ordered) {
+    const last = groups[groups.length - 1];
+    if (last && stroke.left <= last.right + 3) {
+      last.right = Math.max(last.right, stroke.right);
+      last.strokes.push(stroke);
+    } else {
+      groups.push({left: stroke.left, right: stroke.right, strokes: [stroke]});
+    }
+  }
+  return groups;
+}
+
+function isDottedI(group, height) {
+  if (group.strokes.length !== 2) return false;
+  const [dot, stem] = [...group.strokes].sort((a, b) => a.top - b.top);
+  const letterHeight = height * .23;
+  const dotWidth = dot.right - dot.left;
+  const stemWidth = stem.right - stem.left;
+  const stemHeight = stem.bottom - stem.top;
+  const gap = stem.top - dot.bottom;
+  const centerOffset = Math.abs((dot.left + dot.right - stem.left - stem.right) / 2);
+  return dotWidth <= .3 * letterHeight && dot.bottom - dot.top <= .32 * letterHeight
+    && stemWidth <= .28 * letterHeight && stemHeight >= .58 * letterHeight
+    && stemHeight <= 1.45 * letterHeight && gap >= .06 * letterHeight && gap <= .95 * letterHeight
+    && centerOffset <= .2 * letterHeight && stem.bottom >= .5 * height && stem.bottom <= .68 * height;
+}
+
+function makeInkImage() {
+  const width = ink.clientWidth;
+  const height = ink.clientHeight;
+  const groups = groupInk(width, height);
+  const first = groups[0];
+  const last = groups[groups.length - 1];
+  const top = Math.min(...groups.flatMap(group => group.strokes.map(stroke => stroke.top)));
+  const bottom = Math.max(...groups.flatMap(group => group.strokes.map(stroke => stroke.bottom)));
+  const letterHeight = height * .23;
+  const maxGap = Math.max(5, letterHeight * .34);
+  const margin = Math.max(6, (bottom - top) * .14);
+  let previousRight = first.left;
+  let shift = 0;
+  for (const group of groups) {
+    shift += Math.max(0, group.left - previousRight - maxGap);
+    group.shift = shift;
+    previousRight = group.right;
+  }
+  const sample = document.createElement('canvas');
+  sample.width = Math.ceil(last.right - shift - first.left + margin * 2);
+  sample.height = Math.ceil(bottom - top + margin * 2);
+  const context = sample.getContext('2d', {willReadFrequently:true});
+  context.fillStyle = '#fff';
+  context.fillRect(0, 0, sample.width, sample.height);
+  for (const group of groups) {
+    context.setTransform(1, 0, 0, 1, margin - first.left - group.shift, margin - top);
+    for (const stroke of group.strokes) drawStroke(context, stroke.points, width, height);
+  }
+  const pixels = context.getImageData(0, 0, sample.width, sample.height);
+  return {pixels, dottedI: groups.map(group => isDottedI(group, height))};
+}
+
+function cleanRecognition(text, dottedI) {
+  const characters = [...text.replace(/\s+/g, '')];
+  const dottedCount = dottedI.filter(Boolean).length;
+  if (dottedCount && characters.length === dottedI.length) {
+    return characters.map((character, index) =>
+      dottedI[index] && /^[iIlL1|!¦ıÍí(]$/u.test(character) ? 'i' : character
+    ).join('');
+  }
+  // Some recognizers omit the narrow dotted glyph altogether.
+  if (dottedCount === 1 && characters.length + 1 === dottedI.length && characters.every(character => /^[a-z]$/i.test(character))) {
+    characters.splice(dottedI.indexOf(true), 0, 'i');
+  }
+  return characters.join('');
+}
+
+function handwritingEngine() {
+  if (!enginePromise) {
+    enginePromise = import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1/dist/transformers.min.js')
+      .then(async ({pipeline, env, RawImage}) => {
+        env.allowLocalModels = false;
+        env.backends.onnx.wasm.numThreads = 1;
+        const recognize = await pipeline('image-to-text', 'Xenova/trocr-small-handwritten', {device: 'wasm', dtype: 'q8'});
+        return {recognize, RawImage};
+      })
+      .catch(error => {enginePromise = undefined; throw error;});
+  }
+  return enginePromise;
+}
+
+recognizeButton.addEventListener('click', async () => {
+  if (recognizeButton.disabled || graded) return;
+  const revision = inkRevision;
+  pendingRecognition = revision;
+  inkStatus.textContent = '손글씨 읽는 중… 처음에는 인식 모델을 받느라 시간이 걸릴 수 있어.';
+  refreshInkControls();
+  try {
+    const {pixels, dottedI} = makeInkImage();
+    const {recognize, RawImage} = await handwritingEngine();
+    if (revision !== inkRevision) return;
+    inkStatus.textContent = '손글씨 읽는 중…';
+    // Give the browser a frame to display status before running recognition.
+    await new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0)));
+    if (revision !== inkRevision) return;
+    const image = new RawImage(new Uint8Array(pixels.data.buffer), pixels.width, pixels.height, 4);
+    const [result] = await recognize(image, {max_new_tokens: 48});
+    if (revision !== inkRevision) return;
+    const text = cleanRecognition(result?.generated_text ?? '', dottedI);
+    if (!text) {
+      inkStatus.textContent = '글씨를 읽기 어려워. 조금 크게 써서 다시 인식해 줘.';
+      return;
+    }
+    answer.value = text;
+    transcript.hidden = false;
+    byId('check').hidden = false;
+    inkStatus.textContent = '';
+    byId('check').focus();
+  } catch (error) {
+    if (revision !== inkRevision) return;
+    console.error('Handwriting recognition failed:', error);
+    inkStatus.textContent = '손글씨를 읽지 못했어. 인터넷 연결을 확인하고 다시 눌러 줘.';
+    recognizeButton.textContent = '다시 인식';
+  } finally {
+    if (revision === inkRevision) {
+      pendingRecognition = null;
+      refreshInkControls();
+    }
+  }
+});
+
+function normalize(text) {
+  return text.normalize('NFKC').trim().toLowerCase().replace(/[‘’]/g, "'").replace(/\s+/g, '');
+}
+
+const notebookKey = 'english-word-notebook-v1';
+const legacyKey = 'english-dictation-v1';
+const newBook = () => ({version: 1, sets: [], history: []});
+const tabs = ['setup', 'home', 'mix', 'history'];
+const dateFormat = new Intl.DateTimeFormat('ko-KR', {dateStyle: 'medium', timeStyle: 'short'});
+let book = newBook();
+let editingSetId = null;
+let selection = new Set();
+let singleShuffle = true;
+let quizPlan;
+let quizSession;
+let resultSaved = false;
+
+function makeElement(tag, text, className) {
+  const node = document.createElement(tag);
+  if (text !== undefined) node.textContent = text;
+  if (className) node.className = className;
+  return node;
+}
+
+function action(text, className, run) {
+  const button = makeElement('button', text, className);
+  button.type = 'button';
+  button.addEventListener('click', run);
+  return button;
+}
+
+function emptyMessage(title, description) {
+  const message = makeElement('div', undefined, 'empty');
+  message.append(makeElement('strong', title), makeElement('span', description));
+  return message;
+}
+
+function parseWords(text) {
+  const words = new Map();
+  for (const line of text.split(/\r?\n/)) {
+    const separator = line.search(/[=\t]/u);
+    const items = separator < 0
+      ? line.split(/[,、，]/).map(word => ({word: word.trim(), meaning: ''}))
+      : [{word: line.slice(0, separator).trim(), meaning: line.slice(separator + 1).trim()}];
+    for (const item of items) {
+      const key = normalize(item.word);
+      const existing = words.get(key);
+      if (key && (!existing || (!existing.meaning && item.meaning))) words.set(key, item);
+    }
+  }
+  return [...words.values()];
+}
+
+function persistBook(candidate = book) {
+  book = candidate;
+  const status = byId('storage-status');
+  try {
+    localStorage.setItem(notebookKey, JSON.stringify(book));
+    status.hidden = true;
+    return true;
+  } catch {
+    status.textContent = '이 브라우저에 저장할 수 없어. 창을 닫기 전에 시험 기록에서 백업을 저장해 줘.';
+    status.hidden = false;
+    return false;
+  }
+}
+
+function readBook() {
+  try {
+    const data = localStorage.getItem(notebookKey);
+    let old;
+    try { old = JSON.parse(localStorage.getItem(legacyKey) || 'null'); } catch {}
+    if (typeof old?.shuffle === 'boolean') singleShuffle = old.shuffle;
+    if (data) {
+      book = validateBook(JSON.parse(data));
+    } else if (typeof old?.text === 'string') {
+      const words = parseWords(old.text);
+      if (words.length) {
+        persistBook({version: 1, sets: [{id: makeId(), name: '1장', words}], history: []});
+      }
+    }
+  } catch {
+    const status = byId('storage-status');
+    status.textContent = '이 브라우저의 저장 데이터를 읽을 수 없었어. 백업 파일이 있으면 시험 기록에서 불러올 수 있어.';
+    status.hidden = false;
+  }
+  byId('single-shuffle').checked = typeof book.shuffle === 'boolean' ? book.shuffle : singleShuffle;
+}
+
+function makeId() {
+  return globalThis.crypto?.randomUUID?.() || Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
+}
+
+function showPage(page, focus = true) {
+  show(page);
+  const active = page;
+  byId('navigation').hidden = !tabs.includes(active);
+  for (const tab of tabs) {
+    const button = byId('tab-' + tab);
+    if (tab === active) button.setAttribute('aria-current', 'page');
+    else button.removeAttribute('aria-current');
+  }
+  if (focus) byId(page + '-heading')?.focus();
+}
+
+function openHome(focus = true) {
+  stopSpeech();
+  const list = byId('set-list');
+  const status = byId('study-audio-status');
+  list.replaceChildren();
+  status.textContent = '';
+  const total = book.sets.reduce((sum, set) => sum + set.words.length, 0);
+  byId('notebook-count').textContent = book.sets.length + '개 장 · ' + total + '단어';
+  if (!book.sets.length) {
+    list.append(emptyMessage('아직 단어장이 비어 있어', '입력 탭에 저장한 단어와 뜻이 여기에 쌓여.'));
+  }
+  for (const set of book.sets) {
+    const card = makeElement('details', undefined, 'set-card');
+    card.open = book.sets.length === 1;
+    const heading = makeElement('summary');
+    heading.append(makeElement('strong', set.name), makeElement('span', set.words.length + '단어'));
+    const words = makeElement('ul', undefined, 'study-words');
+    for (const {word, meaning} of set.words) {
+      const item = makeElement('li');
+      const label = makeElement('span');
+      const english = makeElement('strong', word);
+      english.lang = 'en';
+      label.append(english);
+      if (meaning) label.append(makeElement('span', meaning, 'hint'));
+      const listen = action('🔊 듣기', '', () => speak(word, .95, status));
+      listen.setAttribute('aria-label', word + ' 발음 듣기');
+      item.append(label, listen);
+      words.append(item);
+    }
+    card.append(heading, words);
+    list.append(card);
+  }
+  showPage('home', focus);
+}
+
+let dirtyEntry = false;
+
+function mayReplaceEntry() {
+  return !dirtyEntry || window.confirm('저장하지 않은 입력이 있어. 그래도 다른 장을 열까?');
+}
+
+function refreshChapterPicker() {
+  const picker = byId('chapter-picker');
+  picker.replaceChildren();
+  for (const [id, name] of [['', '＋ 새 장'], ...book.sets.map(set => [set.id, set.name])]) {
+    const option = makeElement('option', name);
+    option.value = id;
+    picker.append(option);
+  }
+  picker.value = editingSetId || '';
+}
+
+function addWordRow({word = '', meaning = ''} = {}) {
+  const number = wordRows.children.length + 1;
+  const row = makeElement('div', undefined, 'entry-row');
+  const index = makeElement('span', String(number));
+  index.setAttribute('aria-hidden', 'true');
+  const english = makeElement('input');
+  english.type = 'text';
+  english.lang = 'en';
+  english.autocomplete = 'off';
+  english.autocapitalize = 'off';
+  english.spellcheck = false;
+  english.value = word;
+  english.setAttribute('aria-label', number + '번 영어 단어');
+  const korean = makeElement('input');
+  korean.type = 'text';
+  korean.autocomplete = 'off';
+  korean.value = meaning;
+  korean.setAttribute('aria-label', number + '번 뜻');
+  row.append(index, english, korean);
+  wordRows.append(row);
+  return english;
+}
+
+function renderWordRows(words) {
+  wordRows.replaceChildren();
+  for (let index = 0; index < Math.max(8, words.length); index++) addWordRow(words[index]);
+}
+
+function readWordRows() {
+  return [...wordRows.children].map(row => {
+    const [, english, korean] = row.children;
+    return {word: english.value.trim(), meaning: korean.value.trim(), english, korean};
+  });
+}
+
+function loadEditor(id = null) {
+  const set = book.sets.find(item => item.id === id);
+  editingSetId = set?.id || null;
+  refreshChapterPicker();
+  byId('set-title').value = set?.name || '';
+  byId('paste-words').value = '';
+  byId('paste-words').closest('details').open = false;
+  renderWordRows(set?.words || []);
+  dirtyEntry = false;
+  updateCount();
+  byId('setup-status').textContent = '';
+}
+
+function updateCount() {
+  byId('count').textContent = readWordRows().filter(item => item.word).length + '단어 입력';
+}
+
+function applyPaste() {
+  const paste = byId('paste-words');
+  const incoming = parseWords(paste.value);
+  if (!incoming.length) {
+    paste.focus();
+    return;
+  }
+  const current = readWordRows();
+  const byWord = new Map(current.filter(item => item.word).map(item => [normalize(item.word), item]));
+  const remaining = [];
+  for (const item of incoming) {
+    const existing = byWord.get(normalize(item.word));
+    if (!existing) remaining.push(item);
+    else if (!existing.meaning && item.meaning) existing.korean.value = item.meaning;
+  }
+  const empty = current.filter(item => !item.word && !item.meaning);
+  for (const [index, item] of remaining.entries()) {
+    if (index < empty.length) {
+      empty[index].english.value = item.word;
+      empty[index].korean.value = item.meaning;
+    } else {
+      addWordRow(item);
+    }
+  }
+  paste.value = '';
+  paste.closest('details').open = false;
+  dirtyEntry = true;
+  updateCount();
+  byId('setup-status').textContent = '';
+  byId('add-row').focus();
+}
+
+function saveSet(event) {
+  event.preventDefault();
+  const title = byId('set-title');
+  const name = title.value.trim();
+  const status = byId('setup-status');
+  if (byId('paste-words').value.trim()) applyPaste();
+  const rows = readWordRows();
+  const words = [];
+  const seen = new Set();
+  if (!name) {
+    status.textContent = '장 이름을 써 줘.';
+    title.focus();
+    return;
+  }
+  if (book.sets.some(set => set.id !== editingSetId && normalize(set.name) === normalize(name))) {
+    status.textContent = '이미 같은 이름의 장이 있어. 위 목록에서 그 장을 골라 수정해 줘.';
+    title.focus();
+    return;
+  }
+  for (const {word, meaning, english} of rows) {
+    if (!word && !meaning) continue;
+    const key = normalize(word);
+    if (!key || /\s/u.test(word) || seen.has(key)) {
+      status.textContent = !key ? '뜻 옆에 영어 단어도 써 줘.' : seen.has(key)
+        ? '같은 단어가 두 번 들어 있어.' : '한 줄의 영어 칸에는 단어 하나만 써 줘.';
+      english.focus();
+      return;
+    }
+    seen.add(key);
+    words.push({word, meaning});
+  }
+  if (!words.length) {
+    status.textContent = '영어 단어를 한 개 이상 써 줘.';
+    rows[0].english.focus();
+    return;
+  }
+  const set = {id: editingSetId || makeId(), name, words};
+  const sets = editingSetId
+    ? book.sets.map(item => item.id === editingSetId ? set : item)
+    : [...book.sets, set];
+  const saved = persistBook({...book, sets});
+  loadEditor(set.id);
+  status.textContent = saved
+    ? set.name + ' · ' + words.length + '단어를 단어장에 저장했어.'
+    : '단어장에 반영했어. 창을 닫기 전에 백업을 저장해 줘.';
+}
+
+function openMix() {
+  stopSpeech();
+  const options = byId('mix-options');
+  options.replaceChildren();
+  if (!book.sets.length) options.append(emptyMessage('시험 볼 장이 아직 없어', '입력 탭에서 단어를 먼저 저장해 줘.'));
+  for (const set of book.sets) {
+    const checkbox = makeElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = selection.has(set.id);
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) selection.add(set.id);
+      else selection.delete(set.id);
+      renderMixCount();
+    });
+    const label = makeElement('label', undefined, 'mix-option');
+    label.append(checkbox, makeElement('span', set.name + ' · ' + set.words.length + '단어'));
+    options.append(label);
+  }
+  renderMixCount();
+  showPage('mix');
+}
+
+function selectedSets() {
+  return book.sets.filter(set => selection.has(set.id));
+}
+
+function poolFor(sets) {
+  const unique = new Map();
+  for (const set of sets) {
+    for (const {word} of set.words) {
+      const key = normalize(word);
+      if (!unique.has(key)) unique.set(key, {word});
+    }
+  }
+  return [...unique.values()];
+}
+
+function renderMixCount() {
+  const sets = selectedSets();
+  const total = poolFor(sets).length;
+  byId('mix-count').textContent = sets.length + '장 선택 · ' + total + '단어';
+  byId('start-mix').disabled = !total;
+  byId('shuffle-setting').hidden = sets.length !== 1;
+  const toggle = byId('toggle-all');
+  toggle.disabled = !book.sets.length;
+  toggle.textContent = sets.length === book.sets.length && sets.length ? '선택 해제' : '모두 선택';
+}
+
+function beginQuiz(sets) {
+  const mode = sets.length > 1 ? 'mixed' : 'single';
+  quizPlan = {sets, mode, shuffled: mode === 'mixed' || byId('single-shuffle').checked, words: poolFor(sets)};
+  runQuiz(quizPlan.words, mode);
+}
+
+function runQuiz(words, mode) {
+  if (!words.length) return;
+  quizSession = {
+    id: makeId(), mode, setIds: quizPlan.sets.map(set => set.id), setNames: quizPlan.sets.map(set => set.name)
+  };
+  resultSaved = false;
+  byId('quiz-label').textContent = [mode === 'retry' ? '오답 다시' : '', ...quizSession.setNames].filter(Boolean).join(' · ');
+  startRound(words);
+}
+
+function scoreOf(items) {
+  return items.filter(item => item.correct).length;
+}
+
+function saveResult() {
+  if (resultSaved) return;
+  resultSaved = true;
+  const record = {...quizSession, date: new Date().toISOString(), items: [...attempts]};
+  persistBook({...book, history: [record, ...book.history]});
+}
+
+function renderAnswers(list, items) {
+  list.replaceChildren();
+  for (const {word, entry, correct} of items) {
+    const li = makeElement('li');
+    const english = makeElement('strong', word);
+    english.lang = 'en';
+    li.append(correct ? '✓ ' : '', english);
+    li.append(correct ? ' · 정답' : entry ? ' · 쓴 답 ' + entry : ' · 건너뜀');
+    list.append(li);
+  }
+}
+
+function openHistory(filter = '') {
+  stopSpeech();
+  const menu = byId('history-filter');
+  menu.replaceChildren();
+  const options = [['', '모든 장'], ...book.sets.map(set => [set.id, set.name])];
+  for (const [id, title] of options) {
+    const option = makeElement('option', title);
+    option.value = id;
+    menu.append(option);
+  }
+  menu.value = options.some(([id]) => id === filter) ? filter : '';
+  renderHistory();
+  showPage('history');
+}
+
+function renderHistory() {
+  const filter = byId('history-filter').value;
+  const list = byId('history-list');
+  list.replaceChildren();
+  const records = book.history.filter(record => !filter || record.setIds.includes(filter));
+  if (!records.length) list.append(emptyMessage('아직 시험 기록이 없어', '시험을 끝내면 여기에서 점수와 답안을 볼 수 있어.'));
+  for (const record of records) {
+    const details = makeElement('details');
+    const label = record.mode === 'retry' ? '오답 복습' : record.mode === 'mixed' ? '섞어서 시험' : record.setNames[0];
+    const summary = makeElement('summary', label + ' · ' + scoreOf(record.items) + '/' + record.items.length + ' 정답');
+    const date = makeElement('span', dateFormat.format(new Date(record.date)), 'hint');
+    summary.append(date);
+    details.append(summary);
+    if (record.mode !== 'single') details.append(makeElement('p', record.setNames.join(' · '), 'hint'));
+    const words = makeElement('ul', undefined, 'review');
+    renderAnswers(words, record.items);
+    details.append(words);
+    list.append(details);
+  }
+}
+
+function validateBook(data) {
+  const isText = value => typeof value === 'string';
+  const hasText = value => isText(value) && value.trim().length > 0;
+  const isWord = item => hasText(item?.word) && isText(item.meaning);
+  const isList = (items, test) => Array.isArray(items) && items.length > 0 && items.every(test);
+  const isSet = set => hasText(set?.id) && hasText(set.name) && isList(set.words, isWord);
+  const isRecord = item => hasText(item?.id) && hasText(item.date) && Number.isFinite(Date.parse(item.date))
+    && ['single', 'mixed', 'retry'].includes(item.mode)
+    && isList(item.setIds, hasText) && isList(item.setNames, hasText) && item.setIds.length === item.setNames.length
+    && isList(item.items, answer => hasText(answer?.word) && isText(answer.entry) && typeof answer.correct === 'boolean');
+  if (data?.version !== 1 || !Array.isArray(data.sets) || !data.sets.every(isSet)
+    || !Array.isArray(data.history) || !data.history.every(isRecord)) throw new Error('Invalid notebook');
+  return {version: 1, sets: data.sets, history: data.history, shuffle: typeof data.shuffle === 'boolean' ? data.shuffle : undefined};
+}
+
+function exportBackup() {
+  const content = new Blob([JSON.stringify(book, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(content);
+  const link = makeElement('a');
+  link.href = url;
+  link.download = 'english-word-notebook-backup.json';
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+async function importBackup(event) {
+  const file = event.target.files[0];
+  event.target.value = '';
+  if (!file) return;
+  const status = byId('backup-status');
+  try {
+    const imported = validateBook(JSON.parse(await file.text()));
+    const merge = (current, incoming) => {
+      const indexed = new Map(current.map(item => [item.id, item]));
+      for (const item of incoming) if (!indexed.has(item.id)) indexed.set(item.id, item);
+      return [...indexed.values()];
+    };
+    const sets = merge(book.sets, imported.sets);
+    const history = merge(book.history, imported.history).sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
+    const added = (sets.length - book.sets.length) + '개 장과 시험 기록 ' + (history.length - book.history.length) + '건';
+    const saved = persistBook({...book, sets, history});
+    openHistory();
+    status.textContent = added + (saved ? '을 추가했어.' : '을 열었어. 브라우저에 저장할 수 없어.');
+  } catch {
+    status.textContent = '백업을 읽을 수 없어. 이 단어장에서 저장한 JSON 파일을 골라 줘.';
+  }
+}
+
+function show(panel) {
+  for (const name of panels) byId(name).hidden = name !== panel;
+}
+
+function stopSpeech() {
+  speechId += 1;
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+}
+
+function speak(text, rate, status = audioStatus) {
+  stopSpeech();
+  status.textContent = '';
+  if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
+    status.textContent = '이 브라우저에서 음성 재생을 사용할 수 없어.';
+    return;
+  }
+  const thisSpeech = speechId;
+  const voice = new SpeechSynthesisUtterance(text);
+  const englishVoices = window.speechSynthesis.getVoices().filter(item => /^en(?:[-_]|$)/i.test(item.lang));
+  const chosenVoice = englishVoices.find(item => /^en[-_]US$/i.test(item.lang) && item.localService)
+    || englishVoices.find(item => item.localService) || englishVoices[0];
+  voice.lang = chosenVoice ? chosenVoice.lang : 'en-US';
+  if (chosenVoice) voice.voice = chosenVoice;
+  voice.rate = rate;
+  voice.onerror = () => {
+    if (thisSpeech === speechId) status.textContent = '발음 재생이 안 돼. 기기의 영어 음성 설정과 소리를 확인해 줘.';
+  };
+  window.speechSynthesis.speak(voice);
+}
+
+function loadQuestion() {
+  const progress = byId('progress');
+  progress.max = round.length;
+  progress.value = position + 1;
+  question.textContent = '문제 ' + (position + 1) + ' / ' + round.length;
+  graded = false;
+  resetInk();
+  byId('ink-tools').hidden = false;
+  byId('skip').hidden = false;
+  byId('next').hidden = true;
+  audioStatus.textContent = '';
+  question.focus();
+}
+
+function startRound(words) {
+  round = [...words];
+  if (quizPlan.shuffled) {
+    for (let i = round.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [round[i], round[j]] = [round[j], round[i]];
+    }
+  }
+  attempts = [];
+  position = 0;
+  showPage('quiz');
+  loadQuestion();
+  speak(round[position].word, 0.95);
+}
+
+function grade(skipped) {
+  if (graded || (!skipped && transcript.hidden)) return;
+  const entry = answer.value.trim();
+  if (!entry && !skipped) {
+    feedback.classList.remove('wrong');
+    feedback.textContent = '답을 먼저 써 줘.';
+    feedback.hidden = false;
+    answer.focus();
+    return;
+  }
+  const {word} = round[position];
+  const correct = !skipped && normalize(entry) === normalize(word);
+  attempts.push({word, entry: skipped ? '' : entry, correct});
+  if (attempts.length === round.length) saveResult();
+  graded = true;
+  inkRevision += 1;
+  pendingRecognition = null;
+  inkStatus.textContent = '';
+  answer.readOnly = true;
+  byId('edit-transcript').hidden = true;
+  byId('ink-tools').hidden = true;
+  refreshInkControls();
+  feedback.classList.toggle('wrong', !correct);
+  feedback.textContent = (correct ? '정답! ' : '정답은 ') + word;
+  feedback.hidden = false;
+  byId('check').hidden = true;
+  byId('skip').hidden = true;
+  const next = byId('next');
+  next.textContent = position + 1 === round.length ? '결과 보기' : '다음 문제';
+  next.hidden = false;
+  next.focus();
+}
+
+function showResults() {
+  stopSpeech();
+  const missed = attempts.filter(item => !item.correct);
+  const score = byId('score');
+  score.textContent = attempts.length + '문제 중 ' + scoreOf(attempts) + '개 정답';
+  byId('result-note').textContent = missed.length ? '틀린 단어를 다시 연습할 수 있어.' : '전부 맞혔어! ✨';
+  renderAnswers(byId('review'), missed);
+  byId('retry-missed').hidden = missed.length === 0;
+  showPage('results');
+  score.focus();
+}
+
+byId('tab-home').addEventListener('click', () => openHome());
+byId('tab-mix').addEventListener('click', openMix);
+byId('tab-history').addEventListener('click', () => openHistory());
+byId('history-filter').addEventListener('change', renderHistory);
+byId('tab-setup').addEventListener('click', () => {
+  stopSpeech();
+  refreshChapterPicker();
+  showPage('setup');
+});
+byId('single-shuffle').addEventListener('change', event => persistBook({...book, shuffle: event.target.checked}));
+byId('chapter-picker').addEventListener('change', event => {
+  const id = event.target.value;
+  if (mayReplaceEntry()) loadEditor(id);
+  else event.target.value = editingSetId || '';
+});
+byId('new-chapter').addEventListener('click', () => {
+  if (mayReplaceEntry()) {
+    loadEditor();
+    byId('set-title').focus();
+  }
+});
+byId('setup-form').addEventListener('submit', saveSet);
+for (const element of [wordRows, byId('set-title'), byId('paste-words')]) {
+  element.addEventListener('input', () => {
+    dirtyEntry = true;
+    updateCount();
+    byId('setup-status').textContent = '';
+  });
+}
+byId('add-row').addEventListener('click', () => addWordRow().focus());
+byId('apply-paste').addEventListener('click', applyPaste);
+byId('toggle-all').addEventListener('click', () => {
+  selection = selection.size === book.sets.length ? new Set() : new Set(book.sets.map(set => set.id));
+  openMix();
+});
+byId('mix-form').addEventListener('submit', event => {
+  event.preventDefault();
+  const sets = selectedSets();
+  if (sets.length) beginQuiz(sets);
+});
+byId('export').addEventListener('click', exportBackup);
+byId('import').addEventListener('click', () => byId('backup-file').click());
+byId('backup-file').addEventListener('change', importBackup);
+byId('answer-form').addEventListener('submit', event => { event.preventDefault(); grade(false); });
+byId('skip').addEventListener('click', () => grade(true));
+byId('listen').addEventListener('click', () => speak(round[position].word, 0.95));
+byId('slow').addEventListener('click', () => speak(round[position].word, 0.68));
+byId('next').addEventListener('click', () => {
+  position += 1;
+  if (position >= round.length) {
+    showResults();
+    return;
+  }
+  loadQuestion();
+  speak(round[position].word, 0.95);
+});
+byId('retry-all').addEventListener('click', () => runQuiz(quizPlan.words, quizPlan.mode));
+byId('retry-missed').addEventListener('click', () => runQuiz(attempts.filter(item => !item.correct), 'retry'));
+byId('edit').addEventListener('click', () => {
+  if (attempts.length < round.length && (attempts.length || strokes.length)
+    && !window.confirm('시험을 나갈까? 진행 중인 답안은 저장되지 않아.')) return;
+  resetInk();
+  openMix();
+});
+byId('edit-results').addEventListener('click', openMix);
+
+readBook();
+loadEditor();
+openHome(false);
+</script>
+</body>
+</html>

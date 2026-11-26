@@ -1,0 +1,630 @@
+{
+  "schema": 1,
+  "canvas": [
+    1024,
+    1536
+  ],
+  "categories": [
+    {
+      "id": "outfit",
+      "name": "한 벌",
+      "label": "오늘 입을 옷",
+      "icon": "♡"
+    },
+    {
+      "id": "top",
+      "name": "상의",
+      "label": "오늘 입을 상의",
+      "icon": ""
+    },
+    {
+      "id": "bottom",
+      "name": "하의",
+      "label": "오늘 입을 하의",
+      "icon": ""
+    },
+    {
+      "id": "hair",
+      "name": "머리",
+      "label": "헤어스타일",
+      "icon": "✿"
+    },
+    {
+      "id": "shoes",
+      "name": "신발",
+      "label": "오늘 신을 신발",
+      "icon": ""
+    },
+    {
+      "id": "accessory",
+      "name": "장식",
+      "label": "머리장식",
+      "icon": ""
+    },
+    {
+      "id": "face",
+      "name": "표정",
+      "label": "오늘의 표정",
+      "icon": "◡"
+    }
+  ],
+  "baseLayers": [
+    {
+      "id": "body",
+      "path": "assets/body.png",
+      "z": 20
+    },
+    {
+      "id": "bare-feet",
+      "path": "assets/bare-feet.png",
+      "z": 21
+    }
+  ],
+  "defaults": {
+    "outfit": "blue-lace",
+    "hair": "gold-waves",
+    "face": "gentle-smile",
+    "shoes": "ribbon-shoes",
+    "accessory": "no-hair-clip",
+    "room": "lilac-room",
+    "pet": "no-pet",
+    "top": "daily-top-lemon",
+    "bottom": "daily-bottom-denim"
+  },
+  "blink": {
+    "half": "assets/eyes-half.png",
+    "closed": "assets/eyes-closed.png"
+  },
+  "reaction": "big-smile",
+  "items": [
+    {
+      "id": "blue-lace",
+      "name": "하늘빛 레이스 드레스",
+      "category": "outfit",
+      "slot": "outfit",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-outfit-blue.webp",
+      "layers": [
+        {
+          "id": "dress",
+          "path": "assets/outfit-blue.png",
+          "z": 40
+        },
+        {
+          "id": "neck-opening",
+          "path": "assets/neck-blue.png",
+          "z": 41
+        }
+      ],
+      "masks": {
+        "body": "assets/mask-arms-long.png"
+      },
+      "hidesSlots": [
+        "top",
+        "bottom"
+      ]
+    },
+    {
+      "id": "rose-cardigan",
+      "name": "장미 가디건과 치마",
+      "category": "outfit",
+      "slot": "outfit",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-outfit-pink.webp",
+      "layers": [
+        {
+          "id": "dress",
+          "path": "assets/outfit-pink.png",
+          "z": 40
+        },
+        {
+          "id": "neck-opening",
+          "path": "assets/neck-pink.png",
+          "z": 41
+        }
+      ],
+      "masks": {
+        "body": "assets/mask-arms-short.png"
+      },
+      "hidesSlots": [
+        "top",
+        "bottom"
+      ]
+    },
+    {
+      "id": "mint-daisy",
+      "name": "민트 데이지 원피스",
+      "category": "outfit",
+      "slot": "outfit",
+      "price": 10,
+      "unlock": null,
+      "preview": "assets/preview-outfit-mint.webp",
+      "layers": [
+        {
+          "id": "dress",
+          "path": "assets/outfit-mint.png",
+          "z": 40
+        },
+        {
+          "id": "neck-opening",
+          "path": "assets/neck-pink.png",
+          "z": 41
+        }
+      ],
+      "masks": {
+        "body": "assets/mask-arms-short.png"
+      },
+      "hidesSlots": [
+        "top",
+        "bottom"
+      ]
+    },
+    {
+      "id": "basics",
+      "name": "기본 티셔츠와 반바지",
+      "category": "outfit",
+      "slot": "outfit",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-basics.webp",
+      "layers": [],
+      "hidesSlots": [
+        "top",
+        "bottom"
+      ]
+    },
+    {
+      "id": "gold-waves",
+      "name": "금빛 웨이브",
+      "category": "hair",
+      "slot": "hair",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-hair-waves.webp",
+      "layers": [
+        {
+          "id": "back-hair",
+          "path": "assets/hair-waves-back.png",
+          "z": 10,
+          "animation": "sway"
+        },
+        {
+          "id": "front-hair",
+          "path": "assets/hair-waves-front.png",
+          "z": 65,
+          "animation": "sway"
+        }
+      ]
+    },
+    {
+      "id": "gold-bob",
+      "name": "리본 단발",
+      "category": "hair",
+      "slot": "hair",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-hair-bob.webp",
+      "layers": [
+        {
+          "id": "back-hair",
+          "path": "assets/hair-bob-back.png",
+          "z": 10,
+          "animation": "sway"
+        },
+        {
+          "id": "front-hair",
+          "path": "assets/hair-bob-front.png",
+          "z": 65,
+          "animation": "sway"
+        }
+      ]
+    },
+    {
+      "id": "gentle-smile",
+      "name": "살짝 미소",
+      "category": "face",
+      "slot": "face",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-face-smile.webp",
+      "layers": [
+        {
+          "id": "eyes",
+          "path": "assets/eyes-open.png",
+          "z": 51,
+          "blinks": true
+        },
+        {
+          "id": "mouth",
+          "path": "assets/mouth-smile.png",
+          "z": 52
+        }
+      ]
+    },
+    {
+      "id": "big-smile",
+      "name": "활짝 웃음",
+      "category": "face",
+      "slot": "face",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-face-happy.webp",
+      "layers": [
+        {
+          "id": "eyes",
+          "path": "assets/eyes-happy.png",
+          "z": 51
+        },
+        {
+          "id": "mouth",
+          "path": "assets/mouth-happy.png",
+          "z": 52
+        }
+      ]
+    },
+    {
+      "id": "surprise",
+      "name": "깜짝 놀람",
+      "category": "face",
+      "slot": "face",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-face-surprise.webp",
+      "layers": [
+        {
+          "id": "eyes",
+          "path": "assets/eyes-open.png",
+          "z": 51,
+          "blinks": true
+        },
+        {
+          "id": "mouth",
+          "path": "assets/mouth-surprise.png",
+          "z": 52
+        }
+      ]
+    },
+    {
+      "id": "ribbon-shoes",
+      "name": "라벤더 리본 구두",
+      "category": "shoes",
+      "slot": "shoes",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-shoes-ribbon.webp",
+      "layers": [
+        {
+          "id": "footwear",
+          "path": "assets/shoes-ribbon.png",
+          "z": 32
+        }
+      ],
+      "hidesLayers": [
+        "bare-feet"
+      ]
+    },
+    {
+      "id": "barefoot",
+      "name": "맨발",
+      "category": "shoes",
+      "slot": "shoes",
+      "price": 0,
+      "unlock": null,
+      "preview": null,
+      "icon": "◌",
+      "layers": []
+    },
+    {
+      "id": "chestnut-twins",
+      "name": "밤빛 양갈래",
+      "category": "hair",
+      "slot": "hair",
+      "price": 15,
+      "unlock": null,
+      "preview": "assets/preview-hair-chestnut.webp",
+      "layers": [
+        {
+          "id": "back-hair",
+          "path": "assets/hair-chestnut-back.png",
+          "z": 10,
+          "animation": "sway"
+        },
+        {
+          "id": "front-hair",
+          "path": "assets/hair-chestnut-front.png",
+          "z": 65,
+          "animation": "sway"
+        }
+      ]
+    },
+    {
+      "id": "honey-shoes",
+      "name": "허니 끈 구두",
+      "category": "shoes",
+      "slot": "shoes",
+      "price": 12,
+      "unlock": null,
+      "preview": "assets/preview-shoes-honey.webp",
+      "layers": [
+        {
+          "id": "footwear",
+          "path": "assets/shoes-honey.png",
+          "z": 32
+        }
+      ],
+      "hidesLayers": [
+        "bare-feet"
+      ]
+    },
+    {
+      "id": "daisy-pin",
+      "name": "데이지 꽃핀",
+      "category": "accessory",
+      "slot": "accessory",
+      "price": 6,
+      "unlock": null,
+      "preview": "assets/preview-pin-daisy.webp",
+      "layers": [
+        {
+          "id": "hair-clip",
+          "path": "assets/pin-daisy.png",
+          "z": 70,
+          "animation": "sway"
+        }
+      ]
+    },
+    {
+      "id": "no-hair-clip",
+      "name": "장식 없음",
+      "category": "accessory",
+      "slot": "accessory",
+      "price": 0,
+      "unlock": null,
+      "preview": null,
+      "layers": [],
+      "icon": "◌"
+    },
+    {
+      "id": "lilac-room",
+      "name": "라일락 방",
+      "category": "room",
+      "slot": "room",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-room.webp",
+      "layers": [],
+      "scene": "assets/room.webp"
+    },
+    {
+      "id": "sunlit-garden",
+      "name": "햇살 정원",
+      "category": "room",
+      "slot": "room",
+      "price": 20,
+      "unlock": null,
+      "preview": "assets/preview-garden.webp",
+      "layers": [],
+      "scene": "assets/garden.webp"
+    },
+    {
+      "id": "no-pet",
+      "name": "펫 없이",
+      "category": "pet",
+      "slot": "pet",
+      "price": 0,
+      "unlock": null,
+      "preview": null,
+      "layers": [],
+      "icon": "◌"
+    },
+    {
+      "id": "mochi-rabbit",
+      "name": "토끼 모찌",
+      "category": "pet",
+      "slot": "pet",
+      "price": 15,
+      "unlock": null,
+      "preview": "assets/preview-pet-mochi.webp",
+      "layers": [],
+      "sprite": "assets/pet-mochi.png",
+      "ears": "assets/pet-mochi-ears.png"
+    },
+    {
+      "id": "daily-separates",
+      "name": "상하의 코디",
+      "category": "outfit",
+      "slot": "outfit",
+      "price": 0,
+      "unlock": null,
+      "preview": null,
+      "layers": [],
+      "icon": "♡"
+    },
+    {
+      "id": "daily-top-lemon",
+      "name": "레몬 데이지 티셔츠",
+      "category": "top",
+      "slot": "top",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-daily-top-lemon.webp",
+      "layers": [
+        {
+          "id": "top",
+          "path": "assets/daily-top-lemon.png",
+          "z": 43
+        },
+        {
+          "id": "neck-opening",
+          "path": "assets/neck-daily-lemon.png",
+          "z": 44
+        }
+      ]
+    },
+    {
+      "id": "daily-top-mint",
+      "name": "민트 폴로",
+      "category": "top",
+      "slot": "top",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-daily-top-mint.webp",
+      "layers": [
+        {
+          "id": "top",
+          "path": "assets/daily-top-mint.png",
+          "z": 43
+        },
+        {
+          "id": "neck-opening",
+          "path": "assets/neck-daily-mint.png",
+          "z": 44
+        }
+      ]
+    },
+    {
+      "id": "daily-top-lilac",
+      "name": "라일락 블라우스",
+      "category": "top",
+      "slot": "top",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-daily-top-lilac.webp",
+      "layers": [
+        {
+          "id": "top",
+          "path": "assets/daily-top-lilac.png",
+          "z": 43
+        },
+        {
+          "id": "neck-opening",
+          "path": "assets/neck-daily-lilac.png",
+          "z": 44
+        }
+      ]
+    },
+    {
+      "id": "daily-bottom-denim",
+      "name": "연청 데님 반바지",
+      "category": "bottom",
+      "slot": "bottom",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-daily-bottom-denim.webp",
+      "layers": [
+        {
+          "id": "bottom",
+          "path": "assets/daily-bottom-denim.png",
+          "z": 40
+        }
+      ],
+      "masks": {
+        "body": "assets/mask-arms-short.png"
+      }
+    },
+    {
+      "id": "daily-bottom-skirt",
+      "name": "분홍 체크 치마",
+      "category": "bottom",
+      "slot": "bottom",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-daily-bottom-skirt.webp",
+      "layers": [
+        {
+          "id": "bottom",
+          "path": "assets/daily-bottom-skirt.png",
+          "z": 40
+        }
+      ],
+      "masks": {
+        "body": "assets/mask-arms-short.png"
+      }
+    },
+    {
+      "id": "daily-bottom-cream",
+      "name": "크림 와이드 팬츠",
+      "category": "bottom",
+      "slot": "bottom",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-daily-bottom-cream.webp",
+      "layers": [
+        {
+          "id": "bottom",
+          "path": "assets/daily-bottom-cream.png",
+          "z": 40
+        }
+      ],
+      "masks": {
+        "body": "assets/mask-daily-trousers.png"
+      }
+    },
+    {
+      "id": "plain-bob",
+      "name": "심플 밤색 단발",
+      "category": "hair",
+      "slot": "hair",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-hair-plain-bob.webp",
+      "layers": [
+        {
+          "id": "back-hair",
+          "path": "assets/hair-plain-bob-back.png",
+          "z": 10,
+          "animation": "sway"
+        },
+        {
+          "id": "front-hair",
+          "path": "assets/hair-plain-bob-front.png",
+          "z": 65,
+          "animation": "sway"
+        }
+      ]
+    },
+    {
+      "id": "plain-room",
+      "name": "햇살 벽과 나무 바닥",
+      "category": "room",
+      "slot": "room",
+      "price": 0,
+      "unlock": null,
+      "preview": "assets/preview-plain-room.webp",
+      "layers": [],
+      "scene": "assets/plain-room.webp"
+    },
+    {
+      "id": "daily-top-ribbon-hoodie",
+      "name": "토끼 리본 후드티",
+      "category": "top",
+      "slot": "top",
+      "price": 10,
+      "unlock": null,
+      "preview": "assets/preview-daily-top-ribbon-hoodie.webp",
+      "layers": [
+        {
+          "id": "hood-back",
+          "path": "assets/daily-top-ribbon-hoodie-back.png",
+          "z": 15
+        },
+        {
+          "id": "neck-opening",
+          "path": "assets/neck-ribbon-hoodie.png",
+          "z": 42
+        },
+        {
+          "id": "top",
+          "path": "assets/daily-top-ribbon-hoodie.png",
+          "z": 43
+        }
+      ]
+    }
+  ],
+  "audio": {
+    "roomMusic": "assets/music-room.ogg"
+  },
+  "separateOutfit": "daily-separates"
+}

@@ -1,0 +1,8 @@
+.english-shell{margin:0;min-height:0;background:transparent}
+.english-shell main{width:100%;margin:0}
+.english-shell .navigation{margin-bottom:12px}
+.english-shell .card{border-radius:15px;padding:clamp(12px,3vw,21px);box-shadow:none}
+#use-keyboard{margin-top:8px}
+.coin-reward{background:#fff4d9;color:#765419;border-radius:11px;padding:8px 10px;font-weight:740;margin-top:8px}
+.coin-reward:empty{display:none}
+:host{display:block;min-width:0}
